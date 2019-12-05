@@ -17,7 +17,7 @@
 #define new DEBUG_NEW
 #endif
 
-
+void Rotate(float &a, bool dir);
 // COpenGLProbaView
 
 IMPLEMENT_DYNCREATE(COpenGLProbaView, CView)
@@ -31,6 +31,7 @@ BEGIN_MESSAGE_MAP(COpenGLProbaView, CView)
 	ON_WM_CREATE()
 	ON_WM_ERASEBKGND()
 	ON_WM_DESTROY()
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 // COpenGLProbaView construction/destruction
@@ -160,3 +161,44 @@ void COpenGLProbaView::OnInitialUpdate()
 	m_gLRenderer.PrepareScene(pDC);
 	ReleaseDC(pDC);
 }
+
+
+void COpenGLProbaView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	switch (nChar)
+	{
+	case 'A':Rotate(m_gLRenderer.angleY, true); break;
+	case 'D':Rotate(m_gLRenderer.angleY, false); break;
+	case 'W':Rotate(m_gLRenderer.angleX, true); break;
+	case 'S':Rotate(m_gLRenderer.angleX, false); break;
+	case 'Q':Rotate(m_gLRenderer.angleZ, true); break;
+	case 'E':Rotate(m_gLRenderer.angleZ, false); break;
+	default:
+		break;
+	}
+	
+	Invalidate();
+
+	CView::OnKeyDown(nChar, nRepCnt, nFlags);
+}
+
+void Rotate(float &a, bool dir)
+{
+	float angle = 360;
+	float ch = 10;
+	if (dir)
+	{
+		angle = -angle;
+		ch = -ch;
+	}
+
+	if (a == angle)
+	{
+		a = 0;
+	}
+	else
+	{
+		a += ch;
+	}
+}
+

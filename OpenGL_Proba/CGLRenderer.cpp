@@ -1,5 +1,13 @@
 #include "pch.h"
 
+CGLRenderer::CGLRenderer()
+{
+	angleX = 0;
+	angleY = 0;
+	angleZ = 0;
+
+}
+
 bool CGLRenderer::CreateGLContext(CDC* pDC)
 {
 	PIXELFORMATDESCRIPTOR pfd;
@@ -61,6 +69,7 @@ void CGLRenderer::DestroyScene(CDC* pDC)
 
 void CGLRenderer::Reshape(CDC* pDC,int w,int h)
 {
+	glLoadIdentity();
 	wglMakeCurrent(pDC->m_hDC, m_hrc);
 	//--------------------------------
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
@@ -69,36 +78,74 @@ void CGLRenderer::Reshape(CDC* pDC,int w,int h)
 	if (h == 0)
 	{
 		h = 1;
-		w = 0;
 	}
-	gluPerspective(120, (GLsizei)w / (GLsizei)h, 1, 100);
+	gluPerspective(10, (GLsizei)w / (GLsizei)h, 1, 100);
 	glMatrixMode(GL_MODELVIEW);
+	
 	//----------------------------------
-	gluLookAt(0, 0, 10, 0, 0, 5, 0, 1, 0);
+	//gluLookAt(5, 5, 5, 0, 0, 0, 0, 0, 0);
 	wglMakeCurrent(NULL, NULL);
 }
 
 void CGLRenderer::DrawScene(CDC* pDC)
 {
-	wglMakeCurrent(pDC->m_hDC, m_hrc);
-	glClear(GL_COLOR_BUFFER_BIT);
 
+	wglMakeCurrent(pDC->m_hDC, m_hrc);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslated(0, 0, -10);
+	glRotatef(angleX, 1, 0, 0);
+	glRotatef(angleY, 0, 1, 0);
+	glRotatef(angleZ, 0, 0, 1);
+
+
+	glClear(GL_COLOR_BUFFER_BIT);
 	//glLoadIdentity();
 	glLineWidth(2.0);
 	glPointSize(10);
-	glBegin(GL_POINTS);
+	float a = 1.0;
+	glBegin(GL_QUAD_STRIP);
 
-	
+		glColor3f(1.0, 0.0, 0.0);
 
-	float x1, y1;
-	x1 = 0;
-	glColor3f(1.0, 0.0, 0.0);
-		
-		glVertex3f(0, 0, 5);
-	
+		glVertex3f(-a / 2, a / 2, a / 2);
+		glVertex3f(-a / 2, -a / 2, a / 2);
+		glColor3f(0.0, 1.0, 0.0);
 
-	
+		glVertex3f(a / 2, a / 2, a / 2);
+		glVertex3f(a / 2, -a / 2, a / 2);
+		glColor3f(0.0, 0.0, 1.0);
+
+		glVertex3f(a / 2, a / 2, -a / 2);
+		glVertex3f(a / 2, -a / 2, -a / 2);
+		glColor3f(1.0, 1.0, 0.0);
+
+		glVertex3f(-a / 2, a / 2, -a / 2);
+		glVertex3f(-a / 2, -a / 2, -a / 2);
+		glColor3f(1.0, 0.5, 0.0);
+
+		glVertex3f(-a / 2, a / 2, a / 2);
+		glVertex3f(-a / 2, -a / 2, a / 2);
+
 	glEnd();
+
+	glBegin(GL_QUADS);
+
+	glVertex3f(-a / 2, a / 2, a / 2);
+	glVertex3f(a / 2, a / 2, a / 2);
+	glVertex3f(a / 2, a / 2, -a / 2);
+	glVertex3f(-a / 2, a / 2, -a / 2);
+
+
+	glVertex3f(-a / 2, -a / 2, -a / 2);
+	glVertex3f(a / 2, -a / 2, -a / 2);
+	glVertex3f(a / 2, -a / 2, a / 2);
+	glVertex3f(-a / 2, -a / 2, a / 2);
+
+
+
+	glEnd();
+
 	SwapBuffers(pDC->m_hDC);
 	wglMakeCurrent(NULL, NULL);
 }
