@@ -104,7 +104,7 @@ void CGLRenderer::DrawScene(CDC* pDC)
 	glLineWidth(2.0);
 	glPointSize(10);
 	float a = 1.0;
-	glBegin(GL_QUAD_STRIP);
+	/*glBegin(GL_QUAD_STRIP);
 
 		glColor3f(1.0, 0.0, 0.0);
 
@@ -127,9 +127,9 @@ void CGLRenderer::DrawScene(CDC* pDC)
 		glVertex3f(-a / 2, a / 2, a / 2);
 		glVertex3f(-a / 2, -a / 2, a / 2);
 
-	glEnd();
+	glEnd();*/
 
-	glBegin(GL_QUADS);
+	/*glBegin(GL_QUADS);
 
 	glVertex3f(-a / 2, a / 2, a / 2);
 	glVertex3f(a / 2, a / 2, a / 2);
@@ -144,7 +144,19 @@ void CGLRenderer::DrawScene(CDC* pDC)
 
 
 
-	glEnd();
+	glEnd();*/
+	
+	glColor3f(1.0, 0, 0);
+		GLUquadric* qd = gluNewQuadric();
+
+		gluQuadricOrientation(qd, GLU_INSIDE);
+		gluQuadricDrawStyle(qd, GLU_FILL);
+		gluQuadricNormals(qd, GLU_NONE);
+
+
+		gluSphere(qd, 0.5, 36, 16);
+
+		
 
 	SwapBuffers(pDC->m_hDC);
 	wglMakeCurrent(NULL, NULL);
