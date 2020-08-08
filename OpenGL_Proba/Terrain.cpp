@@ -1,4 +1,5 @@
-#include"pch.h"
+#include "pch.h"
+#include"Terrain.h"
 
 
 void Terrain::LoadData(char* path)
@@ -12,22 +13,24 @@ void Terrain::SaveData(char* path)
 
 }
 
-std::vector<Point3f> Terrain::genPoints(char* path)
+std::vector<Point3f> Terrain::genPoints()
 {
-	std::vector<Point3f> data(size*size);
+	std::vector<Point3f> data(0);
 
 	float x, z;
 	x = 0;
 	z = 0;
-	float scale = size / 1.0f;
-	//int sizr_d = size*size;
-	for (int i = 0; i < size; i++)
+	int tes;
+	float scale = map_size/size;
+	for (int i = 0; i <  size-1; i++)
 	{
-		int poz = i*size;
+		int poz = i * size;
 		for (int j = 0; j < size; j++)
 		{
-			data.push_back({ x,points[poz+j],z });
+			
+			data.push_back({ x,points[poz + j],z });
 			data.push_back({ x,points[poz + size + j],z + scale });
+			tes = poz + size + j;
 			x += scale;
 		}
 		z += scale;
@@ -37,34 +40,23 @@ std::vector<Point3f> Terrain::genPoints(char* path)
 	return data;
 }
 
-/*std::vector<point3f> Terrain::genColor(char* path)
+std::vector<point3f> Terrain::genColor()
 {
-	std::vector<point3f> data(size*size);
-
-	float x, z;
-	x = 0;
-	z = 0;
-	float scale = size / 1.0f;
-	//int sizr_d = size*size;
-	for (int i = 0; i < size; i++)
+	std::vector<point3f> data(0);
+	for (int i = 0; i < size-1; i++)
 	{
-		int poz = i*size;
+		int poz = i * size;
 		for (int j = 0; j < size; j++)
 		{
-			if (points[poz + j] < 0.5)
-			{
-				data.push_back({ 1.0f,1.0f,0.2f });
-
-				data.push_back({ x,points[poz + j],z });
-				data.push_back({ x,points[poz + size + j],z + scale });
-				x += scale;
-			}
-			z += scale;
-			x = 0;
+			data.push_back(GetColor(points[poz + j]));
+			data.push_back(GetColor(points[poz + size + j]));
+			
 		}
 	}
-		return data;
-}*/
+	return data;
+}
+
+
 
 
 	point3f Terrain::GetColor(float data)
@@ -83,7 +75,7 @@ std::vector<Point3f> Terrain::genPoints(char* path)
 			{
 				return { 0.0,0.7,0.0 };
 			}
-			else if (data < 0.7f);
+			else if (data < 0.7f)
 			{
 				return{ 0.7,0.3,0.0 };
 			}

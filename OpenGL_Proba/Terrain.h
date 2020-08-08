@@ -1,5 +1,5 @@
 #pragma once
-
+#include <vector>
 
 typedef struct point3f
 {
@@ -11,15 +11,25 @@ typedef struct point3f
 class Terrain
 {
 private:
-	float* points;
-	int size;
-	float scale;
-public:
 	
+	int size;
+	float map_size;
+public:
+	float* points; // tmp
+	Terrain(int size, float scale)
+	{
+		this->size = size;
+		this->map_size = scale;
+		points = (float*)malloc(sizeof(float) * (size * size + size));
+	}
+
 	void LoadData(char* path);
 	void SaveData(char* path);
 	std::vector<Point3f> genPoints();
 	std::vector<point3f> genColor();
 
 	 point3f GetColor(float data);
+
+
+
 };
