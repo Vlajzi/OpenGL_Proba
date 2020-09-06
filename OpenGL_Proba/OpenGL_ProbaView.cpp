@@ -63,7 +63,7 @@ void COpenGLProbaView::OnDraw(CDC* pDC)
 	if (!pDoc)
 		return;
 	m_gLRenderer.DrawScene(pDC);
-
+	//m_gLRenderer.DrawTest(pDC);
 	// TODO: add draw code for native data here
 }
 
@@ -173,6 +173,9 @@ void COpenGLProbaView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case 'S':Rotate(m_gLRenderer.angleX, false); break;
 	case 'Q':Rotate(m_gLRenderer.angleZ, true); break;
 	case 'E':Rotate(m_gLRenderer.angleZ, false); break;
+	case 'O':m_gLRenderer.light_position[0] += 0.1; break;
+	case 'P':m_gLRenderer.light_position[0] -= 0.1; break;
+
 	default:
 		break;
 	}

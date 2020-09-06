@@ -191,6 +191,7 @@
   <ItemGroup>
     <ClInclude Include="CGLRenderer.h" />
     <ClInclude Include="CGLView.h" />
+    <ClInclude Include="DImage.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="OpenGL_Proba.h" />
@@ -205,6 +206,7 @@
   <ItemGroup>
     <ClCompile Include="CGLRenderer.cpp" />
     <ClCompile Include="CGLView.cpp" />
+    <ClCompile Include="DImage.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="OpenGL_Proba.cpp" />
     <ClCompile Include="OpenGL_ProbaDoc.cpp" />

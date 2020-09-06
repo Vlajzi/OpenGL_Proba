@@ -26,6 +26,6 @@
 #include "OpenGL/freeglut.h"
 
 
-
 #include "Terrain.h"
+#include "DImage.h"
 #endif //PCH_H
